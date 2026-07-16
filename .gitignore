@@ -1,0 +1,31 @@
+node_modules
+
+.env
+
+# build outputs
+dist
+.next
+out
+
+# turbo cache
+.turbo
+
+# TypeScript incremental build
+*.tsbuildinfo
+
+# env variants
+.env.local
+.env.*.local
+.env.production
+.env.docker
+.claude
+CLAUDE.md
+
+# testing artifacts
+playwright-report
+test-results
+coverage
+
+# OS
+.DS_Store
+Thumbs.db

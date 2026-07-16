@@ -1,0 +1,1 @@
+ALTER TABLE "scrape_runs" ADD COLUMN "jobs_deactivated" integer DEFAULT 0 NOT NULL;

@@ -1,0 +1,11 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  esbuild: true
+  sharp: true
+  "@img/sharp-darwin-arm64": true
+  "@img/sharp-linux-x64": true
+  "@biomejs/biome": true
+  protobufjs: true
+  '@google/genai': true

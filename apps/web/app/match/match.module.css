@@ -1,0 +1,164 @@
+/* Design tokens + complex visuals for the Hatch résumé-upload page.
+   Layout/spacing/typography live in the JSX via Tailwind; the gradient-heavy
+   and animated pieces live here for readability. */
+
+.page {
+  --amber: #ffb84d;
+  --amber-bright: #ffc164;
+  --cream: #f7f1e3;
+  --muted: #9fbabb;
+  --muted-2: #bcd2d3;
+  --success: #36d6a6;
+  --coral: #ff7a5c;
+
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 18px;
+  display: flex;
+  background: radial-gradient(140% 120% at 100% 100%, #103a44 0%, #0a2c36 55%, #07222b 100%);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  color: var(--cream);
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  border-radius: 30px;
+  overflow: hidden;
+  background: radial-gradient(
+    135% 125% at 8% -8%,
+    #2a8793 0%,
+    #146270 24%,
+    #0c4451 46%,
+    #083540 68%,
+    #05242d 100%
+  );
+  box-shadow: 0 30px 80px rgba(4, 25, 32, 0.45);
+}
+
+.sunGlow {
+  position: absolute;
+  top: -160px;
+  left: -120px;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 186, 92, 0.55),
+    rgba(255, 140, 90, 0.18) 42%,
+    transparent 66%
+  );
+  pointer-events: none;
+  animation: sun 8s ease-in-out infinite;
+}
+
+.sunGlow2 {
+  position: absolute;
+  top: -80px;
+  right: -60px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 122, 92, 0.4), transparent 64%);
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 26px;
+  padding: 26px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 26px 60px rgba(3, 22, 28, 0.45);
+}
+
+.dropzone {
+  cursor: pointer;
+  text-align: center;
+  border-radius: 20px;
+  padding: 38px 26px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px dashed rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
+}
+
+.dropzoneActive {
+  border-color: var(--amber-bright);
+  background: rgba(255, 193, 100, 0.1);
+  transform: scale(1.015);
+}
+
+.iconBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #ffd587, #ef9f3c);
+  box-shadow: 0 14px 30px rgba(239, 159, 60, 0.4);
+}
+
+.floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+.chip {
+  background: rgba(8, 38, 46, 0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 30px rgba(2, 18, 24, 0.4);
+}
+
+.pop {
+  animation: pop 0.5s ease-out;
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes sun {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-4deg);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

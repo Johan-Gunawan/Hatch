@@ -1,0 +1,31 @@
+.git
+node_modules
+**/node_modules
+
+.env
+.env.local
+.env.*.local
+.env.production
+
+# build outputs
+dist
+.next
+out
+
+# turbo cache
+.turbo
+
+# TypeScript incremental build
+*.tsbuildinfo
+
+# testing artifacts
+playwright-report
+test-results
+coverage
+
+# OS
+.DS_Store
+Thumbs.db
+
+# plans / docs not needed in image
+.claude

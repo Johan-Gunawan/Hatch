@@ -1,0 +1,36 @@
+{
+  "name": "@repo/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "PORT=3002 tsx watch --env-file ../../.env src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "playwright:install": "playwright install chromium",
+    "embed:backfill": "tsx --env-file=../../.env src/scripts/backfill-embeddings.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.2.12",
+    "@ai-sdk/google": "^1.2.22",
+    "@ai-sdk/openai": "^1.3.22",
+    "@google/genai": "^2.8.0",
+    "@repo/ai": "workspace:*",
+    "@repo/db": "workspace:*",
+    "ai": "^4.3.16",
+    "cheerio": "^1.1.0",
+    "inngest": "^3.32.5",
+    "openai": "^6.42.0",
+    "playwright": "^1.52.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "tsx": "^4.22.4",
+    "typescript": "^5.8.3",
+    "vitest": "^1.6.0"
+  }
+}
