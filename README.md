@@ -81,7 +81,7 @@ POST /api/resumes/match/{jobId}/explain { resumeId }
 - LLM extraction/parsing/rerank/explain all run against **DeepSeek** (`deepseek-v4-flash`) via the
   raw `openai` SDK pointed at `https://api.deepseek.com`. Resume/job **embeddings** are the one
   exception — those go through OpenAI's `text-embedding-3-small`, since DeepSeek doesn't offer an
-  embeddings endpoint. `@ai-sdk/anthropic`/`@ai-sdk/google` are installed but unused.
+  embeddings endpoint.
 - Playwright is used as a fallback for pages that need JS rendering (detected automatically).
 - The API never scrapes directly — it only enqueues Inngest events; all scraping happens in the
   worker. Resume matching, by contrast, runs synchronously inside the API (no Inngest event) since
@@ -189,7 +189,7 @@ pnpm dev
 You'll also need a local **Inngest dev server** to trigger and observe background jobs:
 
 ```bash
-docker compose up -d inngest
+npx inngest-cli@latest -u http://localhost:8082
 ```
 
 Or run individual apps:
