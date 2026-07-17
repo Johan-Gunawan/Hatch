@@ -189,7 +189,7 @@ pnpm dev
 You'll also need a local **Inngest dev server** to trigger and observe background jobs:
 
 ```bash
-npx inngest-cli@latest -u http://localhost:8082
+npx inngest-cli@latest -u http://localhost:3002
 ```
 
 Or run individual apps:
