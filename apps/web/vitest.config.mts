@@ -16,5 +16,11 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      include: ["app/**", "components/**", "hooks/**", "api/**", "lib/**"],
+      exclude: ["**/*.test.ts", "**/*.test.tsx", "**/*.config.*", ".next/**"],
+    },
   },
 });

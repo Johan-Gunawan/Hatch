@@ -13,8 +13,11 @@
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx --env-file=../../.env src/seed.ts",
+    "db:seed:e2e": "tsx src/seed-e2e.ts",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -23,7 +26,9 @@
     "postgres": "^3.4.9"
   },
   "devDependencies": {
+    "@testcontainers/postgresql": "^12.0.4",
     "@types/node": "^22.15.29",
+    "@vitest/coverage-v8": "^1.6.1",
     "drizzle-kit": "^0.31.10",
     "typescript": "^5.8.3",
     "vitest": "^1.6.0"

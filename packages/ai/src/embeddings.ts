@@ -32,7 +32,7 @@ export async function embedText(text: string): Promise<number[]> {
 export async function embedBatch(texts: string[]): Promise<number[][]> {
   console.log("ai.embedBatch", JSON.stringify({ count: texts.length }));
   const inputs = texts.map(prepare);
-  console.log('INPUTS', inputs);
+  console.log("INPUTS", inputs);
   const vectors: number[][] = [];
   for (let i = 0; i < inputs.length; i += BATCH_SIZE) {
     const slice = inputs.slice(i, i + BATCH_SIZE);

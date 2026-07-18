@@ -2,8 +2,8 @@ import { db } from "./db.js";
 import {
   districts,
   employmentTypes,
-  jobCategories,
   industries,
+  jobCategories,
   provinces,
   workArrangements,
 } from "./schema/index.js";

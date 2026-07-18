@@ -1,4 +1,4 @@
-import { callDeepseekJson, DEEPSEEK_MODEL, embedBatch } from "@repo/ai";
+import { DEEPSEEK_MODEL, callDeepseekJson, embedBatch } from "@repo/ai";
 import { jobRepo } from "@repo/db";
 import type { JobModel } from "@repo/db";
 import { buildJobEmbeddingText } from "../lib/embedding-source-text.js";

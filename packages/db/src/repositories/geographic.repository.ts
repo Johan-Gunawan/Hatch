@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { provinces, districts } from "../schema/geographic.js";
-import type { Province, District } from "../schema/geographic.js";
+import { districts, provinces } from "../schema/geographic.js";
+import type { District, Province } from "../schema/geographic.js";
 import type { DrizzleDB } from "./types.js";
 
 export class GeographicRepository {

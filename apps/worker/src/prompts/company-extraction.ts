@@ -1,4 +1,5 @@
-export const COMPANY_EXTRACTION_SYSTEM = `You are a precise data extraction assistant. Always respond with valid JSON only. No markdown, no explanation, no extra text.`;
+export const COMPANY_EXTRACTION_SYSTEM =
+  "You are a precise data extraction assistant. Always respond with valid JSON only. No markdown, no explanation, no extra text.";
 
 export interface CompanyPageSignals {
   cleanText: string;

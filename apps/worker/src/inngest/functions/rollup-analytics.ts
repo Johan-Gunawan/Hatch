@@ -5,13 +5,13 @@ import type {
   JobEngagementCounts,
   SearchTermCounts,
 } from "@repo/db";
+import { getLocalDayString } from "../../lib/timezone.js";
 import {
   aggregateDailyCounts,
   aggregateJobEngagement,
   aggregateSearchTerms,
 } from "../../services/analytics-rollup.service.js";
 import { inngest } from "../client.js";
-import { getLocalDayString } from "../../lib/timezone.js";
 
 export const rollupAnalytics = inngest.createFunction(
   { id: "rollup-analytics", name: "Rollup Analytics Events", retries: 1 },
