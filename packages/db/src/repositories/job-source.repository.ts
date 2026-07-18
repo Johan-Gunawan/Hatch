@@ -1,6 +1,7 @@
 import { and, desc, eq, gte, like, sql } from "drizzle-orm";
 import { jobSources, scrapeRuns } from "../schema/sources.js";
 import type { JobSource, NewJobSource, ScrapeRun } from "../schema/sources.js";
+import { startOfTodayJakarta, startOfTodayJakartaLiteral } from "./scrape-day-boundary.js";
 import type { DrizzleDB } from "./types.js";
 
 export interface JobSourceWithLatestRun extends JobSource {
@@ -29,7 +30,7 @@ export class JobSourceRepository {
   }
 
   // Active sources each paired with their most recent scrape run from today (or null).
-  // Only runs created today (since midnight UTC) are included — monitoring is per-day.
+  // Only runs created today (since midnight Asia/Jakarta) are included — monitoring is per-day.
   async findAllWithLatestRun(): Promise<JobSourceWithLatestRun[]> {
     console.log("job-source-repo.findAllWithLatestRun", JSON.stringify({}));
     const rows = await this.db.query.jobSources.findMany({
@@ -37,7 +38,7 @@ export class JobSourceRepository {
       orderBy: desc(jobSources.createdAt),
       with: {
         scrapeRuns: {
-          where: gte(scrapeRuns.createdAt, sql`date_trunc('day', now())`),
+          where: gte(scrapeRuns.createdAt, startOfTodayJakarta()),
           orderBy: desc(scrapeRuns.createdAt),
         },
       },
@@ -59,7 +60,7 @@ export class JobSourceRepository {
             select 1 from ${scrapeRuns}
             where ${scrapeRuns.jobSourceId} = ${jobSources.id}
               and ${scrapeRuns.status} = 'completed'
-              and ${scrapeRuns.completedAt} >= date_trunc('day', now())
+              and ${scrapeRuns.completedAt} >= ${startOfTodayJakartaLiteral()}::timestamp
           )`
         )
       );

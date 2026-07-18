@@ -129,6 +129,7 @@ export async function seedScrapeRun(
       status: overrides.status ?? "pending",
       completedAt: overrides.completedAt,
       startedAt: overrides.startedAt,
+      createdAt: overrides.createdAt,
     })
     .returning();
   return row;

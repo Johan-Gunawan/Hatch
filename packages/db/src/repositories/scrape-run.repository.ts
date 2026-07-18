@@ -1,6 +1,7 @@
-import { and, eq, gte, sql } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 import { scrapeRuns } from "../schema/sources.js";
 import type { NewScrapeRun, ScrapeRun } from "../schema/sources.js";
+import { startOfTodayJakarta } from "./scrape-day-boundary.js";
 import type { DrizzleDB } from "./types.js";
 
 export interface ScrapeRunStats {
@@ -21,7 +22,7 @@ export class ScrapeRunRepository {
         and(
           eq(scrapeRuns.jobSourceId, jobSourceId),
           eq(scrapeRuns.status, "completed"),
-          gte(scrapeRuns.completedAt, sql`date_trunc('day', now())`)
+          gte(scrapeRuns.completedAt, startOfTodayJakarta())
         )
       )
       .limit(1);
