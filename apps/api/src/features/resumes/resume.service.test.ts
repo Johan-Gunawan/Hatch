@@ -109,14 +109,26 @@ describe("resumeService.matchResume", () => {
     expect(result.items).toHaveLength(1);
   });
 
-  it("keeps the closest few as a weak match when everything is below the guard", async () => {
+  it("returns no items (not a padded closest-list) when every candidate is below the relevance bar", async () => {
     searchByEmbeddingMock.mockResolvedValueOnce([makeMatch("a", 0.2), makeMatch("b", 0.1)]);
 
     const result = await resumeService.matchResume(RESUME_INPUT);
 
     expect(result.weakMatch).toBe(true);
-    expect(result.fallbackUsed).toBe("closest");
-    expect(result.items).toHaveLength(2);
+    expect(result.fallbackUsed).toBe("none");
+    expect(result.items).toEqual([]);
+    // still persists the résumé (audit trail / future re-match), just with no matches saved.
+    expect(resumeCreateMock).toHaveBeenCalledOnce();
+    expect(saveMatchesMock).toHaveBeenCalledWith("resume-1", []);
+  });
+
+  it("keeps only the candidates that clear the relevance bar, dropping irrelevant ones rather than padding them in", async () => {
+    searchByEmbeddingMock.mockResolvedValueOnce([makeMatch("a", 0.5), makeMatch("b", 0.1)]);
+
+    const result = await resumeService.matchResume(RESUME_INPUT);
+
+    expect(result.weakMatch).toBe(false);
+    expect(result.items.map((i) => i.id)).toEqual(["a"]);
   });
 
   it("fails open (keeps vector order) when the rerank call throws", async () => {

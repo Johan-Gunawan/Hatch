@@ -68,3 +68,27 @@ test("uploading a résumé renders the ranked matches", async ({ page }) => {
   await expect(page.getByText("E2E Match Frontend Engineer")).toBeVisible();
   await expect(page.getByText("E2E Match Backend Engineer")).toBeVisible();
 });
+
+test("uploading an unrelated résumé shows no matches instead of forced suggestions", async ({
+  page,
+}) => {
+  await page.route("**/api/resumes/match", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ ...MATCH_RESPONSE, items: [], weakMatch: true }),
+    })
+  );
+
+  await page.goto("/match");
+
+  await page.setInputFiles('input[type="file"]', {
+    name: "resume.pdf",
+    mimeType: "application/pdf",
+    buffer: Buffer.from("dummy resume bytes"),
+  });
+
+  await expect(page.getByText("No matches found")).toBeVisible();
+  await expect(page.getByText("E2E Match Frontend Engineer")).toHaveCount(0);
+  await expect(page.getByText("E2E Match Backend Engineer")).toHaveCount(0);
+});
