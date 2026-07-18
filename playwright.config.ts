@@ -38,7 +38,10 @@ export default defineConfig({
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {
-      command: "pnpm --filter @repo/api build && pnpm --filter @repo/api start",
+      // Run via tsx (not build+start): the API imports @repo/db, whose package
+      // exports point at raw .ts, so `node dist` can't resolve it — the repo
+      // runs on tsx. No --env-file either, so env comes from `env` below (CI-safe).
+      command: "pnpm --filter @repo/api exec tsx src/index.ts",
       url: `${API_URL}/health`,
       reuseExistingServer: !isCI,
       timeout: 180_000,

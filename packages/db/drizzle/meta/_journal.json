@@ -6,35 +6,35 @@
       "idx": 0,
       "version": "7",
       "when": 1781358102723,
-      "tag": "0000_futuristic_gamora",
+      "tag": "0000_initial_database",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
       "when": 1782228743420,
-      "tag": "0001_calm_iron_man",
+      "tag": "0001_add_table_analytics_search_term_rollups",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
       "when": 1782317596369,
-      "tag": "0002_tiresome_madame_masque",
+      "tag": "0002_alter_table_scrape_runs",
       "breakpoints": true
     },
     {
       "idx": 3,
       "version": "7",
       "when": 1782921050803,
-      "tag": "0003_stiff_sleeper",
+      "tag": "0003_add_table_resumes",
       "breakpoints": true
     },
     {
       "idx": 4,
       "version": "7",
       "when": 1783014603343,
-      "tag": "0004_modern_onslaught",
+      "tag": "0004_alter_jobs_add_embedding_summary",
       "breakpoints": true
     }
   ]

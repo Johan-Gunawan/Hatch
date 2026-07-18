@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-// Clicking a job card opens the detail modal, which fetches the full job from
-// GET /api/jobs/{id} through the same-origin proxy.
+// Clicking a job card opens the detail modal (a custom fixed overlay — not a
+// semantic dialog) showing the role's full description.
 
 test("opens the job detail modal when a card is clicked", async ({ page }) => {
   await page.goto("/jobs");
@@ -10,9 +10,8 @@ test("opens the job detail modal when a card is clicked", async ({ page }) => {
   await expect(card).toBeVisible();
   await card.click();
 
-  // The modal shows the role's detail content pulled from the API.
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(
-    page.getByRole("dialog").getByText(/Build and scale backend services/i)
-  ).toBeVisible();
+  // The modal renders the description and a Close control — neither is present
+  // on the board card, so their visibility confirms the modal opened.
+  await expect(page.getByText(/Build and scale backend services/i)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Close" }).first()).toBeVisible();
 });
