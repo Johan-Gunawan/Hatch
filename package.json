@@ -2,6 +2,9 @@
   "name": "scrapper-ats-web",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
