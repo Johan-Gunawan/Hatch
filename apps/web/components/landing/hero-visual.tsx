@@ -107,6 +107,7 @@ export function HeroVisual() {
       className="relative w-full max-w-[560px] aspect-[600/380] [filter:drop-shadow(0_14px_26px_rgba(2,18,24,0.45))]"
     >
       <svg viewBox="0 0 600 380" className="block w-full h-full overflow-visible">
+        <title>Decorative hero illustration</title>
         <defs>
           <linearGradient id="isl" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#ffd587" />

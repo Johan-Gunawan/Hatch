@@ -10,12 +10,13 @@ import {
 } from "./prompts/resume-parse.js";
 import type { ExplainResponse, MatchRequest, MatchResponse, MatchedJob } from "./resume.schema.js";
 
-// Coarse "is anything even close?" guard — NOT a calibrated cutoff. The DeepSeek
-// rerank below is the authoritative relevance filter. Calibrate on labeled
-// resume/job pairs before trusting this number (see plan D4).
+// The sole "is this résumé even related to any job?" gate — below this, we show
+// no results rather than padding with irrelevant nearest-neighbors. NOT a
+// calibrated cutoff. The DeepSeek rerank below is the authoritative relevance
+// ordering *among* jobs that clear this bar. Calibrate on labeled resume/job
+// pairs before trusting this number (see plan D4).
 const SIMILARITY_THRESHOLD = 0.35;
 const CANDIDATE_LIMIT = 10;
-const WEAK_MATCH_FALLBACK_COUNT = 5;
 
 function toMatchedJob(match: JobEmbeddingMatch): MatchedJob {
   const { job, score } = match;
@@ -106,11 +107,12 @@ export const resumeService = {
       fallbackUsed = "relaxed-filters";
     }
 
-    // Weak match: results exist but all below the coarse guard → keep the closest few.
+    // Only jobs clearing the relevance bar are ever returned — a résumé
+    // unrelated to every candidate yields an empty result, not a padded list
+    // of irrelevant nearest-neighbors.
     const strong = matches.filter((m) => m.score >= SIMILARITY_THRESHOLD);
     const weakMatch = strong.length === 0;
-    let chosen = weakMatch ? matches.slice(0, WEAK_MATCH_FALLBACK_COUNT) : strong;
-    if (weakMatch && matches.length > 0) fallbackUsed = "closest";
+    let chosen = strong;
 
     // 4. Rerank (authoritative relevance ordering).
     chosen = await rerankMatches(profile, chosen);

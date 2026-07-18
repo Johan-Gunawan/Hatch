@@ -17,7 +17,7 @@ interface ExplainState {
 }
 
 export function MatchResults({ result }: { result: MatchResponse }) {
-  const { items, weakMatch, resumeId, profile } = result;
+  const { items, resumeId, profile } = result;
   const [explanations, setExplanations] = useState<Record<string, ExplainState>>({});
 
   const requestExplain = async (jobId: string) => {
@@ -50,13 +50,6 @@ export function MatchResults({ result }: { result: MatchResponse }) {
           </p>
         )}
       </header>
-
-      {weakMatch && items.length > 0 && (
-        <div className="mb-5 rounded-[16px] border border-[#ffc164]/28 bg-[#ffc164]/10 px-4 py-3 text-[14px] font-medium text-[#f7f1e3]">
-          No strong matches yet — here are the closest roles. Try uploading a more detailed résumé
-          or broadening your filters.
-        </div>
-      )}
 
       {items.length === 0 ? (
         <div className="rounded-[16px] border border-white/12 bg-white/5 px-6 py-10 text-center">

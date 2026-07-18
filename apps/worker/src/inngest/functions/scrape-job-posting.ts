@@ -199,7 +199,7 @@ export const scrapeJob = inngest.createFunction(
           if (stub.sourceUrl && !seenStubUrls.has(stub.sourceUrl)) {
             seenStubUrls.add(stub.sourceUrl);
           } else if (stub.requirements != null || stub.description != null) {
-            stub.sourceUrl = jobSource?.careerPageUrl + "?jobName=" + stub.title || null;
+            stub.sourceUrl = `${jobSource?.careerPageUrl}?jobName=${stub.title}` || null;
           }
           jobStubs.push(stub);
         }

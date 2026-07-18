@@ -24,7 +24,16 @@ export function JobCard({ job, saved, applied, onToggleSave, onOpenDetail }: Job
   return (
     <div
       className="group flex flex-col gap-3.5 rounded-2xl border border-white/10 bg-[#0c3540] p-5 transition-all hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_12px_30px_rgba(0,0,0,0.4)] cursor-pointer"
+      // biome-ignore lint/a11y/useSemanticElements: the card contains a nested save button, so it cannot be a native <button>
+      role="button"
+      tabIndex={0}
       onClick={onOpenDetail}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpenDetail();
+        }
+      }}
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">

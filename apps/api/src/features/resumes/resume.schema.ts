@@ -41,7 +41,7 @@ export const MatchResponseSchema = z
     profile: ResumeProfileSchema,
     items: z.array(MatchedJobSchema),
     weakMatch: z.boolean(),
-    fallbackUsed: z.enum(["none", "relaxed-filters", "closest"]),
+    fallbackUsed: z.enum(["none", "relaxed-filters"]),
   })
   .openapi("ResumeMatchResponse");
 

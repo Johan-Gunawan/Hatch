@@ -9,3 +9,7 @@ allowBuilds:
   "@biomejs/biome": true
   protobufjs: true
   '@google/genai': true
+  # Testcontainers (dev-only) transitively pulls these; their native builds are
+  # optional (ssh2 falls back to pure JS, cpu-features is a perf optimization).
+  cpu-features: false
+  ssh2: false

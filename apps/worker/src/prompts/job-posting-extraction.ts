@@ -1,4 +1,5 @@
-export const JOB_POSTING_EXTRACTION_SYSTEM = `You are a precise data extraction assistant specialising in Indonesian job postings. Always respond with valid JSON only. No markdown, no explanation, no extra text.`;
+export const JOB_POSTING_EXTRACTION_SYSTEM =
+  "You are a precise data extraction assistant specialising in Indonesian job postings. Always respond with valid JSON only. No markdown, no explanation, no extra text.";
 
 export interface JobPageSignals {
   cleanText: string;
@@ -59,7 +60,8 @@ export interface JobListingPageSignals {
   sourceUrl: string;
 }
 
-export const JOB_LISTING_EXTRACTION_SYSTEM = `You are a precise data extraction assistant specialising in Indonesian job listing pages. Always respond with valid JSON only. No markdown, no explanation, no extra text.`;
+export const JOB_LISTING_EXTRACTION_SYSTEM =
+  "You are a precise data extraction assistant specialising in Indonesian job listing pages. Always respond with valid JSON only. No markdown, no explanation, no extra text.";
 
 export const jobListingExtraction = (signals: JobListingPageSignals) => {
   const linksText = signals.links

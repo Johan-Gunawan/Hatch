@@ -23,7 +23,7 @@ export interface MatchedJob {
   score: number; // cosine similarity in [0, 1]
 }
 
-export type FallbackUsed = "none" | "relaxed-filters" | "closest";
+export type FallbackUsed = "none" | "relaxed-filters";
 
 export interface MatchResponse {
   resumeId: string;
