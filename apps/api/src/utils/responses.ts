@@ -10,6 +10,8 @@ export const respond = {
   accepted: (c: Context, data: unknown) => c.json(data as never, HTTP.ACCEPTED),
   noContent: (c: Context) => c.body(null, HTTP.NO_CONTENT),
   badRequest: (c: Context, error: string) => c.json({ error } as never, HTTP.BAD_REQUEST),
+  unauthorized: (c: Context, error = "Unauthorized") =>
+    c.json({ error } as never, HTTP.UNAUTHORIZED),
   notFound: (c: Context, error = "Not found") => c.json({ error } as never, HTTP.NOT_FOUND),
   conflict: (c: Context, error: string) => c.json({ error } as never, HTTP.CONFLICT),
   serverError: (c: Context, error = "Internal server error") =>

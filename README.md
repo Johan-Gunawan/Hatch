@@ -250,6 +250,26 @@ without installing Node locally:
 docker compose up -d
 ```
 
+## Deploying to Cloud Run (free tier)
+
+`apps/api` and `apps/worker` deploy to Google Cloud Run (Singapore region), backed by a
+Neon Postgres database and Inngest Cloud as the event bus — Cloud Run's Always Free tier
+and scale-to-zero comfortably cover a light-to-moderate scraping cadence at $0/month. This
+is the only realistic free option for `apps/worker`: it runs headless Chromium via
+Playwright, which needs ~1GB RAM — more than most "free" container platforms allow, and
+more reliably provisioned on Cloud Run's scale-to-zero model than on always-on free tiers.
+
+Full prerequisites, one-time setup (GCP project, Artifact Registry, Neon, Inngest Cloud,
+Secret Manager), and deploy steps are in [`deploy/README.md`](./deploy/README.md). Once set
+up, deploys are one command from the repo root:
+
+```bash
+./deploy/deploy.sh
+```
+
+`apps/web` is out of scope for this — deploy it separately (e.g. Vercel, which is what it's
+built for).
+
 ## Other commands
 
 ```bash

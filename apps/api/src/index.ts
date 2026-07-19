@@ -5,6 +5,7 @@ import { apiReference } from "@scalar/hono-api-reference";
 import { logger } from "hono/logger";
 import { secureHeaders } from "hono/secure-headers";
 import { analyticsRouter } from "./features/analytics/analytics.routes.js";
+import { authRouter } from "./features/auth/auth.routes.js";
 import { companiesRouter } from "./features/companies/company.routes.js";
 import { jobsRouter } from "./features/jobs/job.routes.js";
 import { resumesRouter } from "./features/resumes/resume.routes.js";
@@ -30,6 +31,7 @@ app.use("/api/*", apiKeyGuard);
 // tighter per-IP rate limit instead of the key guard.
 app.use("/track/*", trackingRateLimitMiddleware);
 
+app.route("/api/auth", authRouter);
 app.route("/api/jobs", jobsRouter);
 app.route("/api/resumes", resumesRouter);
 app.route("/api/companies", companiesRouter);
@@ -54,7 +56,9 @@ if (process.env.NODE_ENV !== "production") {
   );
 }
 
-serve({ fetch: app.fetch, port: 3001 }, (info) => {
+const port = Number(process.env.PORT ?? 3001);
+
+serve({ fetch: app.fetch, port }, (info) => {
   console.log(`API running on http://localhost:${info.port}`);
   if (process.env.NODE_ENV !== "production") {
     console.log(`API docs at   http://localhost:${info.port}/docs`);

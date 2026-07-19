@@ -53,6 +53,14 @@ const envSchema = z.object({
     .refine((value) => !isProduction || !!value, {
       message: "DEEPSEEK_AI is required in production (resume parsing/rerank)",
     }),
+  // Admin dashboard login password, checked server-side via timingSafeEqual
+  // (see features/auth). Never exposed to apps/web.
+  ADMIN_PASSWORD: z
+    .string()
+    .optional()
+    .refine((value) => !isProduction || !!value, {
+      message: "ADMIN_PASSWORD is required in production",
+    }),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -74,10 +82,13 @@ const adminApiKeys =
       ? []
       : ["dev-admin-secret-key"];
 
+const adminPassword = parsed.data.ADMIN_PASSWORD ?? (isProduction ? "" : "dev-admin-password");
+
 export const env = {
   isProduction,
   apiKeys,
   adminApiKeys,
+  adminPassword,
   openaiApiKey: parsed.data.OPENAI_API_KEY ?? parsed.data.OPEN_AI_KEY,
   deepseekApiKey: parsed.data.DEEPSEEK_AI,
   corsOrigins: parsed.data.CORS_ORIGINS,
