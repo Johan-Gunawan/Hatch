@@ -6,12 +6,7 @@ import { useState } from "react";
 
 import { AiMatchCta } from "@/components/nav/ai-match-cta";
 
-const NAV_LINKS = [
-  { label: "Jobs", href: "/jobs" },
-  { label: "Companies", href: "#" },
-  { label: "Salaries", href: "#" },
-  { label: "Blog", href: "#" },
-];
+const NAV_LINKS = [{ label: "Jobs", href: "/jobs" }];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -80,13 +75,6 @@ export function Navbar() {
             </Link>
           ))}
           <div className="my-1 h-px bg-white/10" />
-          <Link
-            href="#"
-            onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-[15px] font-semibold text-[#f6f0e2]"
-          >
-            Log In
-          </Link>
           <AiMatchCta className="mt-1 w-full justify-center" onClick={() => setOpen(false)} />
         </div>
       )}

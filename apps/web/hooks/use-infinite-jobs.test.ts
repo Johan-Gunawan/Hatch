@@ -156,7 +156,7 @@ describe("useInfiniteJobs", () => {
       { initialProps: { filters: {} as InfiniteJobsFilters } }
     );
 
-    rerender({ filters: { categoryIds: ["cat-1"] } });
+    rerender({ filters: { workArrangementIds: ["wa-1"] } });
 
     await waitFor(() => expect(fetchJobsPageMock).toHaveBeenCalledOnce());
     expect(trackSearchMock).not.toHaveBeenCalled();

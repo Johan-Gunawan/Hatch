@@ -7,22 +7,37 @@ import {
   type JobListResponse,
   buildJobListQuery,
 } from "@/components/jobs/job-board-data";
+import { maskCompanyName, maskCompanyNames, maskUrl } from "@/lib/demo-mode";
 import { serverFetch } from "./server-client";
 
 export type { Job };
 
-export function listJobSources(): Promise<JobSourceMonitor[]> {
-  return serverFetch<JobSourceMonitor[]>("/api/jobs/sources", { admin: true });
+export async function listJobSources(): Promise<JobSourceMonitor[]> {
+  const sources = await serverFetch<JobSourceMonitor[]>("/api/jobs/sources", { admin: true });
+  return sources.map((source) => ({
+    ...source,
+    name: maskCompanyName(source.name),
+    careerPageUrl: maskUrl(source.careerPageUrl),
+  }));
 }
 
 // Paginated/filtered fetch — used by the jobs board's SSR first page.
-export function listJobsPage(params: JobListParams = {}): Promise<JobListResponse> {
+export async function listJobsPage(params: JobListParams = {}): Promise<JobListResponse> {
   const qs = buildJobListQuery(params);
-  return serverFetch<JobListResponse>(`/api/jobs${qs ? `?${qs}` : ""}`);
+  const res = await serverFetch<JobListResponse>(`/api/jobs${qs ? `?${qs}` : ""}`);
+  return {
+    ...res,
+    items: res.items.map((job) => ({
+      ...job,
+      companyName: maskCompanyName(job.companyName),
+      sourceUrl: maskUrl(job.sourceUrl),
+    })),
+  };
 }
 
-export function listJobFacets(): Promise<JobFacetOptions> {
-  return serverFetch<JobFacetOptions>("/api/jobs/facets");
+export async function listJobFacets(): Promise<JobFacetOptions> {
+  const facets = await serverFetch<JobFacetOptions>("/api/jobs/facets");
+  return { ...facets, companies: maskCompanyNames(facets.companies) };
 }
 
 // Unwraps the paginated shape so existing callers (e.g. the landing page's

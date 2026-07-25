@@ -98,7 +98,7 @@ export function JobCard({ job, saved, applied, onToggleSave, onOpenDetail }: Job
         </div>
       )}
 
-      <div className="h-px bg-white/8" />
+      <div className="mt-auto h-px bg-white/8" />
 
       <div className="flex items-center justify-between gap-3">
         <span

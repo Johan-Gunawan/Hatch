@@ -26,20 +26,6 @@ export function UploadCard(props: UploadCardProps) {
 
   return (
     <div className="relative w-full max-w-[480px]">
-      {/* floating deco chips */}
-      <div
-        className={`${styles.chip} absolute -left-[26px] -top-[14px] z-[5] flex items-center gap-2 rounded-[13px] px-[13px] py-[9px]`}
-      >
-        <span className="h-2 w-2 rounded-full bg-[#36d6a6] shadow-[0_0_0_3px_rgba(54,214,166,0.25)]" />
-        <span className="text-[13px] font-bold text-[#f7f1e3]">14 recruiters viewing</span>
-      </div>
-      <div
-        className={`${styles.chip} absolute -right-[20px] bottom-[34px] z-[5] flex items-center gap-2 rounded-[13px] px-[13px] py-[9px]`}
-      >
-        <span className="text-[15px]">⚡</span>
-        <span className="text-[13px] font-bold text-[#f7f1e3]">Avg. reply in 2 days</span>
-      </div>
-
       <div className={styles.card}>
         {phase === "idle" && (
           <button
@@ -187,7 +173,7 @@ export function UploadCard(props: UploadCardProps) {
           <div className="mt-5 flex items-center justify-center gap-2">
             <LockIcon />
             <span className="text-[12.5px] font-semibold text-[#7fa0a2]">
-              Private &amp; encrypted · only shared with roles you approve
+              Used only to compute your matches
             </span>
           </div>
         )}

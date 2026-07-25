@@ -25,7 +25,7 @@ interface UseInfiniteJobsResult {
 
 // Owns the loaded-jobs array/offset/hasMore for the jobs board's infinite scroll.
 // Seeded from the SSR-fetched first page; refetches page 1 whenever `filters`
-// changes (search/category/work-arrangement/location/company/minSalary/sortBy),
+// changes (search/work-arrangement/location/company/minSalary/sortBy),
 // and appends subsequent pages via loadMore() as the scroll sentinel fires.
 export function useInfiniteJobs({
   filters,
@@ -64,7 +64,6 @@ export function useInfiniteJobs({
           trackSearch({
             query: filters.q,
             filters: {
-              categoryIds: filters.categoryIds,
               workArrangementIds: filters.workArrangementIds,
               locations: filters.locations,
               companies: filters.companies,
@@ -87,7 +86,6 @@ export function useInfiniteJobs({
     };
   }, [
     filters.q,
-    filters.categoryIds,
     filters.workArrangementIds,
     filters.locations,
     filters.companies,

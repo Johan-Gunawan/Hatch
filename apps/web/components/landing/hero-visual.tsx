@@ -100,7 +100,11 @@ const FLOATING_CARDS = [
   },
 ] as const;
 
-export function HeroVisual() {
+interface HeroVisualProps {
+  liveJobsLabel: string;
+}
+
+export function HeroVisual({ liveJobsLabel }: HeroVisualProps) {
   return (
     <div
       aria-hidden="true"
@@ -169,7 +173,7 @@ export function HeroVisual() {
       {/* live stat chip */}
       <div className="absolute left-[2%] top-[3%] flex items-center gap-[9px] rounded-[14px] border border-white/[0.14] bg-[#08262e]/72 px-[15px] py-[9px] backdrop-blur-[8px]">
         <span className="size-2 rounded-full bg-[#36d6a6] shadow-[0_0_0_3px_rgba(54,214,166,0.25)]" />
-        <span className="text-sm font-bold text-[#f7f1e3]">12,480+</span>
+        <span className="text-sm font-bold text-[#f7f1e3]">{liveJobsLabel}</span>
         <span className="text-[13px] font-semibold text-[#bcd2d3]">live jobs</span>
       </div>
 

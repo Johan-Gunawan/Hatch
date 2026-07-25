@@ -50,20 +50,6 @@ describe("useJobFilters", () => {
     expect(result.current.filters.q).toBe("engineer");
   });
 
-  it("toggles a category id on then off", () => {
-    const { result } = renderHook(() => useJobFilters());
-
-    act(() => {
-      result.current.toggleCategory("cat-1");
-    });
-    expect(result.current.categoryIds).toEqual(["cat-1"]);
-
-    act(() => {
-      result.current.toggleCategory("cat-1");
-    });
-    expect(result.current.categoryIds).toEqual([]);
-  });
-
   it("toggles work arrangement, location, and company ids independently", () => {
     const { result } = renderHook(() => useJobFilters());
 
@@ -116,7 +102,6 @@ describe("useJobFilters", () => {
 
     act(() => {
       result.current.setQuery("engineer");
-      result.current.toggleCategory("cat-1");
       result.current.toggleWorkArrangement("wa-1");
       result.current.toggleLocation("Jakarta");
       result.current.toggleCompany("Acme");
@@ -128,7 +113,6 @@ describe("useJobFilters", () => {
     });
 
     expect(result.current.query).toBe("");
-    expect(result.current.categoryIds).toEqual([]);
     expect(result.current.workArrangementIds).toEqual([]);
     expect(result.current.locations).toEqual([]);
     expect(result.current.companies).toEqual([]);

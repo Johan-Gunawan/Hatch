@@ -16,8 +16,6 @@ export type ResolvedJobFilters = Omit<JobListParams, "isActive" | "limit" | "off
 interface UseJobFiltersResult {
   query: string;
   setQuery: (value: string) => void;
-  categoryIds: string[];
-  toggleCategory: (id: string) => void;
   workArrangementIds: string[];
   toggleWorkArrangement: (id: string) => void;
   locations: string[];
@@ -39,7 +37,6 @@ interface UseJobFiltersResult {
 export function useJobFilters(): UseJobFiltersResult {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [categoryIds, setCategoryIds] = useState<string[]>([]);
   const [workArrangementIds, setWorkArrangementIds] = useState<string[]>([]);
   const [locations, setLocations] = useState<string[]>([]);
   const [companies, setCompanies] = useState<string[]>([]);
@@ -50,11 +47,6 @@ export function useJobFilters(): UseJobFiltersResult {
     const timeout = setTimeout(() => setDebouncedQuery(query), SEARCH_DEBOUNCE_MS);
     return () => clearTimeout(timeout);
   }, [query]);
-
-  function toggleCategory(id: string): void {
-    console.log("use-job-filters:toggleCategory", JSON.stringify({ id }));
-    setCategoryIds((prev) => toggleValue(prev, id));
-  }
 
   function toggleWorkArrangement(id: string): void {
     console.log("use-job-filters:toggleWorkArrangement", JSON.stringify({ id }));
@@ -74,7 +66,6 @@ export function useJobFilters(): UseJobFiltersResult {
   function clearAll(): void {
     console.log("use-job-filters:clearAll", JSON.stringify({}));
     setQuery("");
-    setCategoryIds([]);
     setWorkArrangementIds([]);
     setLocations([]);
     setCompanies([]);
@@ -82,15 +73,10 @@ export function useJobFilters(): UseJobFiltersResult {
   }
 
   const hasActive =
-    categoryIds.length > 0 ||
-    workArrangementIds.length > 0 ||
-    locations.length > 0 ||
-    companies.length > 0 ||
-    minSalary > 0;
+    workArrangementIds.length > 0 || locations.length > 0 || companies.length > 0 || minSalary > 0;
 
   const filters: ResolvedJobFilters = {
     q: debouncedQuery || undefined,
-    categoryIds,
     workArrangementIds,
     locations,
     companies,
@@ -101,8 +87,6 @@ export function useJobFilters(): UseJobFiltersResult {
   return {
     query,
     setQuery,
-    categoryIds,
-    toggleCategory,
     workArrangementIds,
     toggleWorkArrangement,
     locations,

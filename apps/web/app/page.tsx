@@ -134,7 +134,7 @@ export default async function Home() {
           </div>
 
           <div className="hidden min-w-[380px] flex-[1_1_460px] justify-center md:flex">
-            <HeroVisual />
+            <HeroVisual liveJobsLabel={STATS[2].value} />
           </div>
         </div>
 

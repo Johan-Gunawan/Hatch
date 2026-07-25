@@ -29,8 +29,6 @@ export function JobBoard({ initialJobs, initialHasMore, facetOptions }: JobBoard
   const {
     query,
     setQuery,
-    categoryIds,
-    toggleCategory,
     workArrangementIds,
     toggleWorkArrangement,
     locations,
@@ -79,25 +77,12 @@ export function JobBoard({ initialJobs, initialHasMore, facetOptions }: JobBoard
   const isMobile = width < MOBILE_BREAKPOINT;
   const showSidebar = !isMobile && layout === "sidebar";
 
-  const categoryNameById = useMemo(
-    () => new Map(facetOptions.categories.map((c) => [c.id, c.name])),
-    [facetOptions]
-  );
   const arrangementNameById = useMemo(
     () => new Map(facetOptions.workArrangements.map((w) => [w.id, w.name])),
     [facetOptions]
   );
 
   const facetGroups: FacetGroup[] = [
-    {
-      key: "category",
-      title: "Category",
-      items: facetOptions.categories.map((c) => ({
-        label: c.name,
-        active: categoryIds.includes(c.id),
-        onToggle: () => toggleCategory(c.id),
-      })),
-    },
     {
       key: "arrangement",
       title: "Work arrangement",
@@ -128,10 +113,6 @@ export function JobBoard({ initialJobs, initialHasMore, facetOptions }: JobBoard
   ];
 
   const activeChips = [
-    ...categoryIds.map((id) => ({
-      label: categoryNameById.get(id) ?? id,
-      remove: () => toggleCategory(id),
-    })),
     ...workArrangementIds.map((id) => ({
       label: arrangementNameById.get(id) ?? id,
       remove: () => toggleWorkArrangement(id),
@@ -254,8 +235,7 @@ export function JobBoard({ initialJobs, initialHasMore, facetOptions }: JobBoard
           <div className="mb-4.5">
             <h1 className="text-2xl font-bold tracking-tight">Open roles</h1>
             <p className="mt-1 text-sm text-[#7f9698]">
-              Across {facetOptions.companies.length} companies and {facetOptions.categories.length}{" "}
-              categories
+              Across {facetOptions.companies.length} companies
             </p>
           </div>
 

@@ -35,12 +35,12 @@ describe("buildJobListQuery", () => {
   });
 
   it("joins array params with commas", () => {
-    const qs = buildJobListQuery({ categoryIds: ["a", "b", "c"] });
-    expect(qs).toBe("categoryIds=a%2Cb%2Cc");
+    const qs = buildJobListQuery({ workArrangementIds: ["a", "b", "c"] });
+    expect(qs).toBe("workArrangementIds=a%2Cb%2Cc");
   });
 
   it("omits array params when the array is empty", () => {
-    expect(buildJobListQuery({ categoryIds: [] })).toBe("");
+    expect(buildJobListQuery({ workArrangementIds: [] })).toBe("");
   });
 
   it("includes minSalary=0 since the check is !== undefined, not truthiness", () => {

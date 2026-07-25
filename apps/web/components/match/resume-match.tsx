@@ -16,13 +16,13 @@ const BENEFITS = [
   },
   {
     icon: "↗",
-    title: "Recruiters come to you",
-    desc: "Approved companies message you directly. Skip the application black hole.",
+    title: "Know why you match",
+    desc: "Get an on-demand AI explanation for any match — no guessing why a role is ranked high.",
   },
   {
     icon: "⚑",
-    title: "One résumé, every job",
-    desc: "Update it once; every match refreshes across all live roles.",
+    title: "No account needed",
+    desc: "Upload once and see your matches instantly. Nothing to sign up for.",
   },
 ];
 

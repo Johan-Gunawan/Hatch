@@ -105,13 +105,6 @@
   animation: floaty 5s ease-in-out infinite;
 }
 
-.chip {
-  background: rgba(8, 38, 46, 0.82);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 14px 30px rgba(2, 18, 24, 0.4);
-}
-
 .pop {
   animation: pop 0.5s ease-out;
 }

@@ -35,11 +35,10 @@ export function uniqueSorted(values: (string | null | undefined)[]): string[] {
   );
 }
 
-// Mirrors the API's JobFacetOptionsSchema. Category/workArrangement options carry
-// an id (filtered by id); location/company options are plain strings (filtered by
+// Mirrors the API's JobFacetOptionsSchema. workArrangement options carry an id
+// (filtered by id); location/company options are plain strings (filtered by
 // the raw scraped text, since province/district FKs aren't reliably backfilled).
 export interface JobFacetOptions {
-  categories: { id: string; name: string }[];
   workArrangements: { id: string; name: string }[];
   locations: string[];
   companies: string[];
@@ -59,7 +58,6 @@ export interface JobListParams {
   limit?: number;
   offset?: number;
   q?: string;
-  categoryIds?: string[];
   workArrangementIds?: string[];
   locations?: string[];
   companies?: string[];
@@ -76,7 +74,6 @@ export function buildJobListQuery(params: JobListParams): string {
   if (params.limit !== undefined) query.set("limit", String(params.limit));
   if (params.offset !== undefined) query.set("offset", String(params.offset));
   if (params.q) query.set("q", params.q);
-  if (params.categoryIds?.length) query.set("categoryIds", params.categoryIds.join(","));
   if (params.workArrangementIds?.length)
     query.set("workArrangementIds", params.workArrangementIds.join(","));
   if (params.locations?.length) query.set("locations", params.locations.join(","));

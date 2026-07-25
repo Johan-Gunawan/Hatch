@@ -1,5 +1,7 @@
 import { ApiError } from "@/api/client";
 import { serverFetch } from "@/api/server-client";
+import type { MatchResponse } from "@/components/match/resume-match-data";
+import { maskCompanyName, maskUrl } from "@/lib/demo-mode";
 import mammoth from "mammoth";
 import { type NextRequest, NextResponse } from "next/server";
 // Import the lib entry directly — pdf-parse's index.js runs debug code that
@@ -52,11 +54,19 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const data = await serverFetch("/api/resumes/match", {
+    const data = await serverFetch<MatchResponse>("/api/resumes/match", {
       method: "POST",
       body: JSON.stringify({ resumeText, fileName: file.name }),
     });
-    return NextResponse.json(data);
+    const masked: MatchResponse = {
+      ...data,
+      items: data.items.map((job) => ({
+        ...job,
+        companyName: maskCompanyName(job.companyName),
+        sourceUrl: maskUrl(job.sourceUrl),
+      })),
+    };
+    return NextResponse.json(masked);
   } catch (err) {
     if (err instanceof ApiError) {
       return NextResponse.json({ error: err.message }, { status: err.status });

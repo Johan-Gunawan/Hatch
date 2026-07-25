@@ -1,6 +1,7 @@
 import { ApiError } from "@/api/client";
 import { serverFetch } from "@/api/server-client";
 import type { JobFacetOptions } from "@/components/jobs/job-board-data";
+import { maskCompanyNames } from "@/lib/demo-mode";
 import { NextResponse } from "next/server";
 
 // Proxies the browser's facet-options fetch to the backend, attaching the
@@ -10,7 +11,8 @@ export async function GET() {
 
   try {
     const data = await serverFetch<JobFacetOptions>("/api/jobs/facets");
-    return NextResponse.json(data);
+    const masked: JobFacetOptions = { ...data, companies: maskCompanyNames(data.companies) };
+    return NextResponse.json(masked);
   } catch (err) {
     if (err instanceof ApiError) {
       return NextResponse.json({ error: err.message }, { status: err.status });

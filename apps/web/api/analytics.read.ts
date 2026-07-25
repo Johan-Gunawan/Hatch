@@ -1,4 +1,5 @@
 import "server-only";
+import { maskCompanyName } from "@/lib/demo-mode";
 import { serverFetch } from "./server-client";
 
 export type DashboardRangeKey = "today" | "7d" | "30d" | "custom";
@@ -112,5 +113,11 @@ export async function getDashboardData(range: DateRange): Promise<DashboardData>
   console.log("analytics-read:getDashboardData", JSON.stringify({ range }));
 
   const qs = new URLSearchParams({ from: range.from, to: range.to });
-  return serverFetch<DashboardData>(`/api/analytics/dashboard?${qs.toString()}`, { admin: true });
+  const data = await serverFetch<DashboardData>(`/api/analytics/dashboard?${qs.toString()}`, {
+    admin: true,
+  });
+  return {
+    ...data,
+    topJobs: data.topJobs.map((job) => ({ ...job, companyName: maskCompanyName(job.companyName) })),
+  };
 }

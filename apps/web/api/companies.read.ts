@@ -1,4 +1,5 @@
 import "server-only";
+import { maskCompanyName, maskUrl } from "@/lib/demo-mode";
 import { serverFetch } from "./server-client";
 
 export interface CompanySummary {
@@ -9,6 +10,11 @@ export interface CompanySummary {
   website: string | null;
 }
 
-export function listCompanies(limit = 50): Promise<CompanySummary[]> {
-  return serverFetch<CompanySummary[]>(`/api/companies?limit=${limit}`);
+export async function listCompanies(limit = 50): Promise<CompanySummary[]> {
+  const companies = await serverFetch<CompanySummary[]>(`/api/companies?limit=${limit}`);
+  return companies.map((company) => ({
+    ...company,
+    name: maskCompanyName(company.name),
+    website: maskUrl(company.website),
+  }));
 }
