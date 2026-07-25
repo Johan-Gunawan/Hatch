@@ -7,6 +7,7 @@ import { JobCard } from "@/components/jobs/job-card";
 import { JobDetailModal } from "@/components/jobs/job-detail-modal";
 import { type FacetGroup, JobFiltersPanel } from "@/components/jobs/job-filters-panel";
 import { AiMatchCta } from "@/components/nav/ai-match-cta";
+import { useAppliedJobs } from "@/hooks/use-applied-jobs";
 import { useFavoriteJobs } from "@/hooks/use-favorite-jobs";
 import { useInfiniteJobs } from "@/hooks/use-infinite-jobs";
 import { type JobSortBy, useJobFilters } from "@/hooks/use-job-filters";
@@ -51,9 +52,9 @@ export function JobBoard({ initialJobs, initialHasMore, facetOptions }: JobBoard
   });
 
   const { saved, toggleSaved } = useFavoriteJobs();
+  const { applied, markApplied } = useAppliedJobs();
 
   const [layout, setLayout] = useState<Layout>("sidebar");
-  const [applied, setApplied] = useState<string[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openJobId, setOpenJobId] = useState<string | null>(null);
   const [width, setWidth] = useState(1200);
@@ -138,11 +139,6 @@ export function JobBoard({ initialJobs, initialHasMore, facetOptions }: JobBoard
     observer.observe(el);
     return () => observer.disconnect();
   }, [hasMore, loadMore]);
-
-  function markApplied(id: string) {
-    console.log("job-board:markApplied", JSON.stringify({ id }));
-    setApplied((prev) => (prev.includes(id) ? prev : [...prev, id]));
-  }
 
   const openJob = openJobId != null ? (jobs.find((j) => j.id === openJobId) ?? null) : null;
 

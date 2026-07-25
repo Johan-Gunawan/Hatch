@@ -1,11 +1,11 @@
 import type { RouteHandler } from "@hono/zod-openapi";
 import { respond } from "../../utils/responses.js";
-import type { scrapeCompaniesRoute } from "../companies/company.routes.js";
 import type {
   getJobRoute,
   listJobFacetsRoute,
   listJobSourcesRoute,
   listJobsRoute,
+  scrapeJobPosting,
 } from "./job.routes.js";
 import { jobService } from "./job.service.js";
 
@@ -54,9 +54,8 @@ export const getById: RouteHandler<typeof getJobRoute> = async (c) => {
   return respond.ok(c, job);
 };
 
-export const scrape: RouteHandler<typeof scrapeCompaniesRoute> = async (c) => {
+export const scrape: RouteHandler<typeof scrapeJobPosting> = async (c) => {
   const { jobSourceId } = c.req.query();
-  console.log("test b roo");
   await jobService.enqueueScrape(jobSourceId);
   return respond.accepted(c, { message: "Running for scrape job posting" });
 };

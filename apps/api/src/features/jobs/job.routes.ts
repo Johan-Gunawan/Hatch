@@ -63,7 +63,7 @@ export const scrapeJobPosting = createRoute({
   tags: ["Scrape Job Posting"],
   summary: "Scrape all companies",
   request: {
-    query: z.object({ jobSourceId: z.string().nullable() }),
+    query: z.object({ jobSourceId: z.string().optional() }),
   },
   responses: {
     202: jsonContent("Scrape job posting accepted", ScrapeAcceptedSchema),

@@ -26,12 +26,11 @@ export async function serverFetch<T>(path: string, init?: ServerFetchOptions): P
     cache: "no-store",
   });
 
-  console.log("result", res);
-
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    console.log("BODYY", body);
-    throw new ApiError(body?.error ?? res.statusText, res.status);
+    const rawError = body?.error;
+    const message = typeof rawError === "string" ? rawError : (rawError?.message ?? res.statusText);
+    throw new ApiError(message, res.status);
   }
 
   return res.json() as Promise<T>;
