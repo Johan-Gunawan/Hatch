@@ -92,7 +92,6 @@ POST /api/resumes/match/{jobId}/explain { resumeId }
 - **Node.js** 20+
 - **pnpm** 11.6.0 (see `packageManager` in `package.json` — `corepack` will pick this up
   automatically)
-- **Docker** (for PostgreSQL and the local Inngest dev server, or run them yourself)
 - A **DeepSeek API key** — <https://platform.deepseek.com>
 - An **OpenAI API key** — <https://platform.openai.com> (only needed for resume matching; it's used
   purely for embeddings, not chat completions)
@@ -240,35 +239,6 @@ curl -X POST http://localhost:3001/api/resumes/match/<jobId>/explain \
   -H "x-api-key: dev-secret-key" \
   -d '{"resumeId": "<resumeId from the previous response>"}'
 ```
-
-## Running everything with Docker Compose
-
-Once `.env.docker` is set up, you can run the full stack (Postgres, Inngest, API, worker, web)
-without installing Node locally:
-
-```bash
-docker compose up -d
-```
-
-## Deploying to Cloud Run (free tier)
-
-`apps/api` and `apps/worker` deploy to Google Cloud Run (Singapore region), backed by a
-Neon Postgres database and Inngest Cloud as the event bus — Cloud Run's Always Free tier
-and scale-to-zero comfortably cover a light-to-moderate scraping cadence at $0/month. This
-is the only realistic free option for `apps/worker`: it runs headless Chromium via
-Playwright, which needs ~1GB RAM — more than most "free" container platforms allow, and
-more reliably provisioned on Cloud Run's scale-to-zero model than on always-on free tiers.
-
-Full prerequisites, one-time setup (GCP project, Artifact Registry, Neon, Inngest Cloud,
-Secret Manager), and deploy steps are in [`deploy/README.md`](./deploy/README.md). Once set
-up, deploys are one command from the repo root:
-
-```bash
-./deploy/deploy.sh
-```
-
-`apps/web` is out of scope for this — deploy it separately (e.g. Vercel, which is what it's
-built for).
 
 ## Other commands
 
